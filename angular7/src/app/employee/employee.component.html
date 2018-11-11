@@ -1,0 +1,81 @@
+<form role="form" (ngSubmit)="addDivision(newRule);">
+  <div class="col-md-7">
+    <div class="form-group">
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput placeholder="Division Name" name="name" [(ngModel)]="newRule.newDivision" required>
+
+        </mat-form-field>
+
+      </div>
+      <div class="example-container">
+       
+          <!-- <input  type="file"  name="file" [(ngModel)]="newRule.file" required> -->
+
+          <input  (change)="displayPhoto($event)" accept=".png,.jpeg,.jpg,.bmp,.gif,.pdf" id="file-input" type="file"/>
+
+      </div>
+
+    </div>
+    <br>
+    <div class="example-container">
+        <mat-form-field>
+          <mat-select name="type" [(ngModel)]="newRule.type" required>
+            <mat-option value="Never">Never</mat-option>
+            <mat-option value="Periodical">Periodical</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+   
+
+
+  </div>
+
+
+
+
+  <img height="100" [src]=" 'http://localhost:3000/logo/'+ '1541775528101_920695.png'" >
+
+
+
+
+
+<!-- *** -->
+<div class="form-group" >
+    <div *ngFor="let item of newRule.time; let i = index; trackBy:trackByIndex">
+      
+      <div class="example-container">
+        <div class="col-md-12 ">
+          <div class="col-md-2">
+            comment:
+          </div>
+          <div class="col-md-3">
+              <mat-form-field>
+              <input matInput placeholder="comment"  name="time{{i}}"  [(ngModel)]="newRule.time[i].name" >
+              </mat-form-field>
+          </div>
+        
+          <div class="col-md-2">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" class="add-project">
+              <mat-icon>close</mat-icon>
+            </button>
+            <input type="button" value="X" (click)="closetime(i)" class="add-project zeromargin">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pull-right">
+        <input type="button" value="Add More" (click)="addMore()" class="addmore1 round-button btn padd-bt">
+
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-4">
+        <button type="submit" [disabled]="btnDisbled" class="btn round-button">Submit</button>
+
+      </div>
+
+
+    </div>
+
+  </form>

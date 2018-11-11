@@ -1,0 +1,132 @@
+<mat-form-field>
+    <mat-select placeholder="Select Survey" [(ngModel)]="data" (ngModelChange)="dataChanged($event)" name="data">
+
+      <mat-option value="all">All</mat-option>
+      <mat-option value="{{item._id}}" *ngFor="let item of allusers">
+        <!-- <ng-container > -->
+
+        {{ item.title }}
+        <!-- </ng-container > -->
+
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="example-container mat-elevation-z8 ">
+      <mat-table [dataSource]="dataSource" matSort>
+        <!-- Name Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Sl_No </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i = index"> {{(i+1)}}</mat-cell>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row._id}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button> -->
+            <!-- <mat-menu #menu="matMenu"> -->
+            <button (click)="getId(row._id)" class="round-btz" data-toggle="modal" data-target="#deleteModal">
+                <span matTooltip="Delete"><i class="material-icons">delete</i></span> 
+              <!-- <span>Delete</span> -->
+            </button>
+            <button (click)="getEditId(row._id)" class="round-btz" data-toggle="modal" data-target="#editModal">
+                <span matTooltip="Edit"><i class="material-icons">mode_edit</i></span> 
+              <!-- <span>Edit</span> -->
+            </button>
+            
+
+            <!-- </mat-menu> -->
+
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+      <div class="col-md-15 ">
+        <!-- <div *ngIf="showSpinner" class="deletespinner">
+  <mat-spinner></mat-spinner>
+ </div> -->
+      </div>
+      <div class="col-md-12 noItemFound" *ngIf="notExist">
+        <div class="col-md-4 col-md-offset-4">
+          <mat-toolbar class="back-color">No item found!</mat-toolbar>
+        </div>
+      </div>
+      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+
+  </div>
+  <!--*********modal-->
+  <!-- Modal content-->
+   <!-- Modal -->
+   <div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="frmEditStud" #frmEditStud="ngForm" (ngSubmit)=" updateUser(user)" novalidate>
+            <div class="col-md-7">
+              <div class="form-group">
+                <div class="example-container">
+                  <h1>Student Information</h1>
+                  <mat-form-field>
+                    <input matInput placeholder="Title" name="title" [(ngModel)]="user.title" required>
+                  </mat-form-field>
+                 
+ 
+                </div>
+
+              </div>
+              <br>
+              
+
+
+
+              <div class="row">
+                <div class="col-md-4">
+                  <button type="submit" [disabled]="btnDisbled" class="btn round-button">Update</button>
+
+                </div>
+
+
+              </div>
+
+
+            </div>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
